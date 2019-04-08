@@ -5,6 +5,7 @@ from base64 import b64decode
 
 import connexion
 from connexion.resolver import RestyResolver
+from werkzeug.local import LocalProxy
 
 import config
 from db import db
@@ -13,9 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def create_app():
-    conn_app = connexion.App(
-        "preferences",
-        specification_dir="./spec/")
+    conn_app = connexion.App("preferences", specification_dir="./spec/")
 
     with open("spec/api.spec.yaml", "rb") as fp:
         spec = yaml.safe_load(fp)
@@ -46,10 +45,12 @@ def authentication_header_handler(apikey, required_scopes=None):
     try:
         principal = json.loads(b64decode(apikey))
         account = principal["identity"]["account_number"]
-        return {"principal": principal,
-                "account": account}
+        return {"uid": {"account": account}}
     except Exception:
+        logger.exception("Failed to parse auth token")
         return None
 
+
+user = LocalProxy(lambda: connexion.context["user"])
 
 application = create_app()
