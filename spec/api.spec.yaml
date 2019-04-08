@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  description: Insights Preferences
+  version: 1.0.0
+  title: Insights Preferences
+paths:
+  /:
+    get:
+      operationId: api.pref.get
+      summary: get preferences for calling principle
+      description: get the entire set of preferences for calling principle
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successfully read the set of preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+    post:
+      operationId: api.pref.post
+      summary: set all preferences for calling principle
+      description: set all preferences for calling principle
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        description: A complete set of preferences to save for the principle.
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: preference_set
+              $ref: '#/components/schemas/PreferenceSet'
+      responses:
+        '202':
+          description: Successfully saved a preference set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+        '400':
+          description: Invalid request.
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-rh-identity
+      x-apikeyInfoFunc: app.authentication_header_handler
+  schemas:
+    PreferenceSet:
+      type: object
+      properties:
+        version:
+          type: string
+          description: Version of the preference set
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
+          description: 'A single preference'
+    Preference:
+      type: object
+      properties:
+        version:
+          type: string
+          description: Version of the preference
+        name:
+          type: string
+        value:
+          type: string
+        scope:
+          type: string
+          enum:
+            - user
+            - account
