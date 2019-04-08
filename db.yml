@@ -7,5 +7,5 @@ services:
       POSTGRES_PASSWORD: insights
       POSTGRES_USER: insights
       POSTGRES_DB: insights
-      ports: 
-        - "5432:5432"
+    ports: 
+      - "5432:5432"
