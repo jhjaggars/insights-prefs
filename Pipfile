@@ -28,6 +28,7 @@ marshmallow = "*"
 pytest = "*"
 pytest-cov = "*"
 coverage = "*"
+pgcli = "*"
 
 [requires]
 python_version = "3.6"
