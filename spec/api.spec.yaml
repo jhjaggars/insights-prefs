@@ -6,7 +6,7 @@ info:
 paths:
   /:
     get:
-      operationId: api.pref.get
+      operationId: api.get
       summary: get preferences for calling principle
       description: get the entire set of preferences for calling principle
       security:
@@ -19,7 +19,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PreferenceSet'
     post:
-      operationId: api.pref.post
+      operationId: api.post
       summary: set all preferences for calling principle
       description: set all preferences for calling principle
       security:

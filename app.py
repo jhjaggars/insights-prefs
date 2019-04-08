@@ -1,11 +1,13 @@
 import logging
 import yaml
+import json
+from base64 import b64decode
 
 import connexion
 from connexion.resolver import RestyResolver
 
 import config
-import db
+from db import db
 
 logger = logging.getLogger(__name__)
 
@@ -38,3 +40,16 @@ def create_app():
     db.init_app(flask_app)
 
     return flask_app
+
+
+def authentication_header_handler(apikey, required_scopes=None):
+    try:
+        principal = json.loads(b64decode(apikey))
+        account = principal["identity"]["account_number"]
+        return {"principal": principal,
+                "account": account}
+    except Exception:
+        return None
+
+
+application = create_app()

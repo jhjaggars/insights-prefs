@@ -1,6 +1,6 @@
 import logging
 import uuid
-import datetime
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 
