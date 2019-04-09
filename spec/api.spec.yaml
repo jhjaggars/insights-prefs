@@ -59,8 +59,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Preference'
-          description: 'A single preference'
     Preference:
+      description: 'A single preference'
       type: object
       properties:
         name:
