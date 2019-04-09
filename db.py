@@ -19,3 +19,7 @@ class Preference(db.Model):
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
     prefs = db.Column(JSONB)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

@@ -63,13 +63,13 @@ components:
     Preference:
       type: object
       properties:
-        version:
-          type: string
-          description: Version of the preference
         name:
           type: string
         value:
-          type: string
+          oneOf: 
+            - type: integer
+            - type: boolean
+            - type: string
         scope:
           type: string
           enum:
